@@ -1,65 +1,107 @@
 <%- include('./partials/header') %>
 
+<!-- Success Toast -->
 <% if (success && success.length > 0) { %>
-<div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
-    <span class="inline-block mt-1 mb-1 text-white">
-        <%= success %>
+<div id="flashMessage" class="fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg bg-green-600 shadow-xl animate-bounce z-50 transition-opacity duration-700">
+    <span class="inline-block text-white font-bold tracking-wide">
+        ✅ <%= success %>
     </span>
 </div>
 <% } %>
 
-<div class="w-full h-screen flex items-start px-20 py-20 gap-10">
-   
-    <div class="w-[25%] flex h-screen flex-col items-start">
-        <div class="flex items-center gap-2">
-            <h3>Sort by</h3>
-            <form action="/shop" method="GET">
-                <select class="border-[1px] px-2 py-1" name="sortby" id="">
-                    <option value="popular">Popular</option>
-                    <option value="newest">Newest</option>
-                </select>
-                <button type="submit" class="hidden"></button>
-            </form>
-        </div>
-        <div class="flex flex-col mt-20">
-            <a class="block w-fit mb-2" href="/shop?filter=new">New Collection</a>
-            <a class="block w-fit mb-2" href="/shop?filter=all">All Products</a>
-            <a class="block w-fit mb-2" href="/shop?filter=discounted">Discounted Products</a>
-        </div>
-        <div class="mt-32">
-            <a class="block w-fit mb-2" href="">Filter by :</a>
-            <a class="block w-fit mb-2" href="">Availability</a>
-            <a class="block w-fit mb-2" href="">Discount</a>
-        </div>
-    </div>
+<div class="relative w-full min-h-screen px-16 py-20">
 
-    <div class="w-[75%] flex flex-col gap-5 h-screen">
-        <div class="flex items-start gap-5 flex-wrap">
-            <% if (products && products.length > 0) { %>
-                <% products.forEach(function(product) { %>
-                    <div class="w-60">
-                        <div class="w-full h-52 flex items-center justify-center"
-                             style="background-color: <%= product.bgcolor %>;">
-                            <img class="h-[12rem]" src="<%= product.image %>" alt="<%= product.name %>">
-                        </div>
-                        <div class="flex justify-between items-center px-4 py-4"
-                             style="background-color: <%= product.panelcolor %>; color: <%= product.textcolor %>;">
-                            <div>
-                                <h3><%= product.name %></h3>
-                                <h4>₹ <%= product.price %></h4>
+    <!-- Main Layout -->
+    <div class="relative w-full flex items-start gap-12">
+
+        <!-- Sidebar -->
+        <div class="w-[25%] bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-6 sticky top-20 h-fit border border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">🔍 Filters</h2>
+
+            <!-- Sort -->
+            <div class="mb-8">
+                <h3 class="font-semibold text-gray-700 mb-2">Sort by</h3>
+                <form action="/shop" method="GET">
+                    <select class="border rounded-lg px-4 py-2 w-full cursor-pointer focus:ring-2 focus:ring-blue-400" 
+                            name="sortby" onchange="this.form.submit()">
+                        <option value="popular">🔥 Popular</option>
+                        <option value="newest">🆕 Newest</option>
+                    </select>
+                </form>
+            </div>
+
+            <!-- Categories -->
+            <div class="mb-8">
+                <h3 class="font-semibold text-gray-700 mb-3">Categories</h3>
+                <div class="space-y-3">
+                    <a class="block px-3 py-2 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition" href="/shop?filter=new">✨ New Collection</a>
+                    <a class="block px-3 py-2 rounded-md bg-purple-50 text-purple-600 hover:bg-purple-100 transition" href="/shop?filter=all">📦 All Products</a>
+                    <a class="block px-3 py-2 rounded-md bg-red-50 text-red-600 hover:bg-red-100 transition" href="/shop?filter=discounted">💸 Discounted</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="w-[75%] relative">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-10">🛍️ Explore Our Collection</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <% if (products && products.length > 0) { %>
+                    <% products.forEach(function(product) { %>
+                        <div class="relative bg-white/90 backdrop-blur-lg shadow-lg rounded-xl overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-300 border border-gray-100">
+
+                            <!-- Product Image -->
+                            <div class="w-full h-60 flex items-center justify-center bg-gradient-to-tr from-gray-100 via-white to-gray-200"
+                                 style="background-color:<%= product.bgcolor || '#f8f8f8' %>;">
+                                <img class="h-[12rem] object-contain transition-transform duration-300 hover:scale-110" 
+                                     src="<%= product.image %>" alt="<%= product.name %>">
                             </div>
-                            <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white"
-                               href="/addtocart/<%= product._id %>">
-                                <i class="ri-add-line"></i>
-                            </a>
+
+                            <!-- Product Info -->
+                            <div class="px-5 py-4 flex justify-between items-center"
+                                 style="background-color:<%= product.panelcolor || '#fff' %>; color:<%= product.textcolor || '#111' %>;">
+                                <div>
+                                    <h3 class="text-lg font-bold"><%= product.name %></h3>
+                                    <h4 class="text-gray-700">₹ <%= product.price %></h4>
+                                </div>
+                                <button 
+                                    onclick="showCartButton()" 
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-500 text-white hover:bg-blue-600 transition shadow-md">
+                                    <i class="ri-shopping-cart-line text-lg"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                <% }); %>
-            <% } else { %>
-                <p class="text-gray-500">No products available at the moment.</p>
-            <% } %>
+                    <% }); %>
+                <% } else { %>
+                    <p class="text-gray-500 text-lg">😕 No products available at the moment.</p>
+                <% } %>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Floating Go to Cart Button -->
+<div id="goToCartBar" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-3 cursor-pointer opacity-0 pointer-events-none transition-all duration-500">
+    <i class="ri-shopping-bag-3-line text-xl"></i>
+    <a href="/cart" class="font-semibold">Go to Cart</a>
+</div>
+
+<script>
+    // Auto-hide flash message after 4 seconds
+    const flash = document.getElementById("flashMessage");
+    if (flash) {
+        setTimeout(() => {
+            flash.classList.add("opacity-0");
+            setTimeout(() => flash.remove(), 700); // remove from DOM after fade
+        }, 4000);
+    }
+
+    // Show floating "Go to Cart" button
+    function showCartButton() {
+        const bar = document.getElementById("goToCartBar");
+        bar.classList.remove("opacity-0", "pointer-events-none");
+        bar.classList.add("opacity-100");
+    }
+</script>
 
 <%- include('./partials/footer') %>
