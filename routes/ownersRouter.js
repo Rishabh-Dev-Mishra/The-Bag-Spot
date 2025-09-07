@@ -1,16 +1,6 @@
-const express = require("express")
-const router = express.Router()
-const ownerModel = require("../models/owners-model")
-
-router.get("/", function (req, res) {
-    res.send("hey")
-})
-
-//to check whether the process environment is set or not
-// console.log(process.env.NODE_ENV);
-
-//setting environment variable
-//$env:NODE_ENV:"development"
+const express = require("express");
+const router = express.Router();
+const ownerModel = require("../models/owners-model");
 
 if (process.env.NODE_ENV === "development") {
     router.post("/create", async function (req, res) {

@@ -1,9 +1,7 @@
-const mongoose = require("mongoose")
-
-// mongoose.connect("mongodb://127.0.0.1:27017/scatch");
+const mongoose = require("mongoose");
 
 const productSchema = mongoose.Schema({
-    image: String,
+    image: String, // name of image file like "1bag.png"
     name: String,
     price: Number,
     discount: {
@@ -13,6 +11,6 @@ const productSchema = mongoose.Schema({
     bgcolor: String,
     panelcolor: String,
     textcolor: String
-})
+});
 
-module.exports = mongoose.model("product", productSchema)
+module.exports = mongoose.model("product", productSchema);
