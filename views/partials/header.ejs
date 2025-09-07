@@ -10,23 +10,37 @@
 </head>
 
 <body class="font-['helvetica_now_display'] bg-gray-50">
-    <nav class="w-full flex justify-between px-5 py-3 bg-white shadow-md">
-        <h3 class="text-xl font-bold text-gray-800">The Bag Spot</h3>
+    <!-- Navbar -->
+    <nav class="w-full flex justify-between items-center px-6 py-4 bg-white shadow-md sticky top-0 z-50">
+        <!-- Logo -->
+        <div>
+            <a href="/" class="text-2xl font-extrabold text-gray-800 hover:text-blue-600 transition-colors">
+                The Bag Spot
+            </a>
+        </div>
+
         <% 
-            // Set loggedin to true by default if not explicitly passed
+            // Default loggedin to true if undefined
             var loggedin = typeof loggedin !== "undefined" ? loggedin : true; 
         %>
-        <% if (loggedin) { %>
-            <div class="flex gap-5 text-gray-600">
-                <a class="hover:text-blue-500" href="/shop">Shop</a>
-                <a class="hover:text-blue-500" href="/cart">Cart</a>
-                <a class="hover:text-blue-500" href="#">My account</a>
-                <a class="text-red-600 hover:text-red-800" href="/users/logout">Logout</a>
-            </div>
-        <% } else { %>
-            <div class="flex gap-5 text-gray-600">
-                <a class="hover:text-blue-500" href="/users/login">Login</a>
-                <a class="hover:text-blue-500" href="/users/register">Register</a>
-            </div>
-        <% } %>
+
+        <!-- Navigation Links -->
+        <div class="flex items-center gap-6 text-gray-700">
+            <% if (loggedin) { %>
+                <a class="hover:text-blue-500 transition-colors" href="/shop">Shop</a>
+                <a class="hover:text-blue-500 transition-colors relative" href="/cart">
+                    Cart
+                    <% if (typeof cartCount !== "undefined" && cartCount > 0) { %>
+                        <span class="absolute -top-2 -right-3 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                            <%= cartCount %>
+                        </span>
+                    <% } %>
+                </a>
+                <a class="hover:text-blue-500 transition-colors" href="#">My Account</a>
+                <a class="text-red-600 hover:text-red-800 transition-colors" href="/users/logout">Logout</a>
+            <% } else { %>
+                <a class="hover:text-blue-500 transition-colors" href="/users/login">Login</a>
+                <a class="hover:text-blue-500 transition-colors" href="/users/register">Register</a>
+            <% } %>
+        </div>
     </nav>

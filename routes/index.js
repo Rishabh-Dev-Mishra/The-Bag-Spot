@@ -2,7 +2,6 @@ const express = require('express');
 const isLoggedIn = require('../middlewares/isLoggedIn');
 const { logout } = require("../controllers/authController")
 const router = express.Router();
-
 const userModel = require("../models/user-model");
 const productModel = require("../models/product-model");
 
@@ -16,7 +15,6 @@ router.get("/shop", isLoggedIn, async (req, res) => {
     const success = req.flash("success");
     res.render("shop", { products, success });
 });
-
 
 router.get("/addtocart/:productId", isLoggedIn, async (req, res) => {
     const user = await userModel.findOne({ email: req.user.email });
@@ -49,7 +47,6 @@ router.get("/addtocart/:productId", isLoggedIn, async (req, res) => {
     if (actionFrom === "cart") res.redirect("/cart");
     else res.redirect("/shop");
 });
-
 
 
 // Cart page
