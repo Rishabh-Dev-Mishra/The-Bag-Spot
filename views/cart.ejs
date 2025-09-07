@@ -16,9 +16,13 @@
              style="background-color: <%= item.product.panelcolor || '#f8f8f8' %>">
           <h3 class="text-2xl"><%= item.product.name %></h3>
           <div class="flex items-center gap-2">
-            <i class="w-7 h-7 bg-white flex rounded-full items-center justify-center ri-add-line"></i>
+            <a href="/addtocart/<%= item.product._id %>?action=increase&from=cart">
+              <i class="w-7 h-7 bg-white flex rounded-full items-center justify-center ri-add-line"></i>
+            </a>
             <div class="px-2 py-1 rounded-md bg-white text-black"><%= item.quantity %></div>
-            <i class="w-7 h-7 bg-white flex rounded-full items-center justify-center ri-subtract-line"></i>
+            <a href="/addtocart/<%= item.product._id %>?action=decrease&from=cart">
+              <i class="w-7 h-7 bg-white flex rounded-full items-center justify-center ri-subtract-line"></i>
+            </a>
           </div>
         </div>
 

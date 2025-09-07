@@ -17,7 +17,7 @@ router.get("/shop", isLoggedIn, async (req, res) => {
     res.render("shop", { products, success });
 });
 
-// Add to cart
+
 router.get("/addtocart/:productId", isLoggedIn, async (req, res) => {
     const user = await userModel.findOne({ email: req.user.email });
     const product = await productModel.findById(req.params.productId);
@@ -27,22 +27,29 @@ router.get("/addtocart/:productId", isLoggedIn, async (req, res) => {
         return res.redirect("/shop");
     }
 
-    // Ensure cart is an array
     user.cart = user.cart || [];
-
-    // Check if product already in cart
     const existingItem = user.cart.find(item => item.product && item.product.toString() === product._id.toString());
 
+    const action = req.query.action;
     if (existingItem) {
-        existingItem.quantity += 1;
+        if (action === "increase") existingItem.quantity += 1;
+        else if (action === "decrease") {
+            existingItem.quantity -= 1;
+            if (existingItem.quantity <= 0) {
+                user.cart = user.cart.filter(i => i.product && i.product.toString() !== product._id.toString());
+            }
+        } else existingItem.quantity += 1;
     } else {
         user.cart.push({ product: product._id, quantity: 1 });
     }
 
     await user.save();
-    req.flash("success", `${product.name} added to cart`);
-    res.redirect("/shop");
+
+    const actionFrom = req.query.from;
+    if (actionFrom === "cart") res.redirect("/cart");
+    else res.redirect("/shop");
 });
+
 
 
 // Cart page
