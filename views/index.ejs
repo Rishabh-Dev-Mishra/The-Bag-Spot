@@ -1,50 +1,83 @@
 <%- include('./partials/header.ejs') %>
 
 <% if (error && error.length > 0) { %>
-  <div class="fixed top-5 left-1/2 transform -translate-x-1/2 p-3 rounded-md bg-red-500 z-50">
-    <span class="text-white font-medium"><%= error %></span>
+  <div class="fixed top-5 left-1/2 transform -translate-x-1/2 p-4 rounded-xl bg-red-600 text-white shadow-lg z-50 transition-all duration-300 animate-slide-in-down">
+    <span class="font-semibold"><%= error %></span>
   </div>
 <% } %>
 
-<div class="min-h-screen flex flex-col lg:flex-row px-10 py-20 gap-10 items-center justify-center bg-gray-50">
+<div class="min-h-screen flex flex-col items-center justify-center p-6 lg:p-12 bg-gray-100 font-sans relative overflow-hidden">
+  
+  <div class="absolute inset-0 z-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23333\' fill-opacity=\'.05\'%3E%3Cpath d=\'M36 34.215L51.895 44.5l8.11 4.5V28.525l-2.062-1.115L36 34.215zm-6.25-11.23L44.895 2.5l8.11 4.5v15.975L44.895 28.5L29.75 22.985zM30 3.75l15.895 9.25L54 18.275V2.225l-8.11-4.5L30 3.75z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+  
+  <div class="w-full max-w-5xl flex flex-col lg:flex-row gap-10 lg:gap-20 p-8 lg:p-12 bg-white rounded-3xl shadow-2xl z-10">
+    
+    <div class="lg:w-1/2 flex flex-col items-center justify-center text-center lg:text-left p-6 bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-xl transform transition-transform duration-500 ease-in-out hover:scale-[1.02] relative overflow-hidden">
+      <div class="relative z-10 p-4">
+        <h2 class="text-4xl lg:text-5xl font-extrabold mb-4 leading-tight">Elevate Your Style.</h2>
+        <p class="text-lg font-light mb-6 opacity-90">Discover a collection of timeless bags crafted for the modern explorer. Sign up to find your perfect match.</p>
+        <div class="w-3/4 mx-auto lg:w-full mt-8">
+          <img src="https://imgs.search.brave.com/D4jBxFLGAOJXSrJwkVrjrsWKC1JdcTJxY2kYC9SCpOI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9idXJz/dC5zaG9waWZ5Y2Ru/LmNvbS9waG90b3Mv/YmxhY2stYmFnLWxh/eXMtd2l0aC1pdGVt/cy1mb3Itc2Nob29s/LWZhbGxpbmctb3V0/LW9mLWl0LmpwZz93/aWR0aD0xMDAwJmZv/cm1hdD1wanBnJmV4/aWY9MCZpcHRjPTA" alt="Stylish bag" class="rounded-xl shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-500 ease-in-out">
+        </div>
+      </div>
+      <div class="absolute bottom-[-50px] right-[-50px] w-48 h-48 bg-white opacity-10 rounded-full blur-2xl"></div>
+    </div>
+    
+    <div class="lg:w-1/2 flex flex-col items-center justify-center p-6 lg:p-10">
+      
+      <div class="w-full mb-10">
+        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Create an Account</h2>
+        <form autocomplete="off" action="/users/register" method="post" class="flex flex-col gap-6">
+          <input name="fullname" type="text" placeholder="Full Name"
+            class="border-b-2 border-gray-200 p-4 w-full focus:border-blue-600 focus:outline-none transition-all duration-300 placeholder-gray-400 font-medium">
+          <input name="email" type="email" placeholder="Email Address"
+            class="border-b-2 border-gray-200 p-4 w-full focus:border-blue-600 focus:outline-none transition-all duration-300 placeholder-gray-400 font-medium">
+          <input name="password" type="password" placeholder="Password"
+            class="border-b-2 border-gray-200 p-4 w-full focus:border-blue-600 focus:outline-none transition-all duration-300 placeholder-gray-400 font-medium">
+          <button type="submit"
+            class="bg-blue-600 text-white py-4 rounded-full mt-4 font-bold text-lg shadow-lg hover:bg-blue-700 transition-colors duration-300 transform hover:scale-105">
+            Sign Up
+          </button>
+        </form>
+      </div>
 
-  <!-- Registration Section -->
-  <div class="w-full lg:w-1/2 flex flex-col items-center">
-    <div class="w-full max-w-md px-6 py-8 bg-white shadow-md rounded-lg">
-      <h2 class="text-3xl font-bold mb-4 text-center">Welcome to <span class="text-blue-500">Scatch</span></h2>
-      <h3 class="text-xl text-gray-600 mb-6 text-center">Create Your Account</h3>
-      <form autocomplete="off" action="/users/register" method="post" class="flex flex-col gap-4">
-        <input name="fullname" type="text" placeholder="Full Name"
-          class="border p-2 rounded focus:ring-2 focus:ring-blue-400 w-full">
-        <input name="email" type="email" placeholder="Email"
-          class="border p-2 rounded focus:ring-2 focus:ring-blue-400 w-full">
-        <input name="password" type="password" placeholder="Password"
-          class="border p-2 rounded focus:ring-2 focus:ring-blue-400 w-full">
-        <button type="submit"
-          class="bg-blue-500 text-white py-3 rounded-full mt-2 hover:bg-blue-600 transition font-semibold">
-          Create My Account
-        </button>
-      </form>
+      <div class="relative flex py-5 items-center w-full">
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="flex-shrink mx-4 text-gray-500 font-light">OR</span>
+        <div class="flex-grow border-t border-gray-300"></div>
+      </div>
+      
+      <div class="w-full">
+        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Log in to Your Account</h2>
+        <form autocomplete="off" action="/users/login" method="post" class="flex flex-col gap-6">
+          <input name="email" type="email" placeholder="Email Address"
+            class="border-b-2 border-gray-200 p-4 w-full focus:border-blue-600 focus:outline-none transition-all duration-300 placeholder-gray-400 font-medium">
+          <input name="password" type="password" placeholder="Password"
+            class="border-b-2 border-gray-200 p-4 w-full focus:border-blue-600 focus:outline-none transition-all duration-300 placeholder-gray-400 font-medium">
+          <button type="submit"
+            class="bg-indigo-600 text-white py-4 rounded-full mt-4 font-bold text-lg shadow-lg hover:bg-indigo-700 transition-colors duration-300 transform hover:scale-105">
+            Login
+          </button>
+        </form>
+      </div>
+
     </div>
   </div>
-
-  <!-- Login Section -->
-  <div class="w-full lg:w-1/2 flex flex-col items-center">
-    <div class="w-full max-w-md px-6 py-8 bg-white shadow-md rounded-lg">
-      <h2 class="text-2xl font-bold mb-4 text-center">Login to Your Account</h2>
-      <form autocomplete="off" action="/users/login" method="post" class="flex flex-col gap-4">
-        <input name="email" type="email" placeholder="Email"
-          class="border p-2 rounded focus:ring-2 focus:ring-blue-400 w-full">
-        <input name="password" type="password" placeholder="Password"
-          class="border p-2 rounded focus:ring-2 focus:ring-blue-400 w-full">
-        <button type="submit"
-          class="bg-blue-500 text-white py-3 rounded-full mt-2 hover:bg-blue-600 transition font-semibold w-full">
-          Login
-        </button>
-      </form>
-    </div>
-  </div>
-
 </div>
 
-<%- include('./partials/footer') %>
+<%- include('./partials/footer.ejs') %>
+
+<style>
+  @keyframes slide-in-down {
+    from {
+      transform: translate(-50%, -100%);
+    }
+    to {
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .animate-slide-in-down {
+    animation: slide-in-down 0.5s ease-out forwards;
+  }
+</style>

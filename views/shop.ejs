@@ -1,86 +1,65 @@
-<%- include('./partials/header') %> <% if(success && success.length > 0) { %>
-<div
-  class="fixed top-5 left-1/2 -translate-x-1/2 p-3 rounded-md bg-blue-500 shadow-lg z-50"
->
-  <span class="text-white font-medium"><%= success %></span>
+<%- include('./partials/header') %>
+
+<% if(success && success.length > 0) { %>
+<div class="fixed top-5 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full bg-green-500 shadow-lg z-50 animate-fade-in-down">
+  <span class="text-white font-medium text-sm"><%= success %></span>
 </div>
 <% } %>
 
-<!-- Full Page Background -->
-<div
-  class="w-full min-h-screen flex px-10 py-10 gap-10"
-  style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"
->
-  <!-- Sidebar Box -->
-  <aside
-    class="w-1/4 flex flex-col gap-8 rounded-xl bg-white shadow-lg p-6 sticky top-10 max-h-[80vh] overflow-y-auto"
-  >
-    <div class="flex flex-col gap-2">
-      <h3 class="font-semibold text-lg">Sort by</h3>
-      <form action="/shop">
-        <select class="border px-2 py-1 rounded w-full" name="sortby">
-          <option value="popular">Popular</option>
-          <option value="newest">Newest</option>
-        </select>
-      </form>
-    </div>
+<div class="w-full min-h-screen flex flex-col lg:flex-row p-6 lg:p-12 gap-8 bg-gray-50 text-gray-800 font-sans relative overflow-hidden">
+  
+  <div class="absolute inset-0 z-0 bg-gradient-to-br from-blue-50 to-indigo-50"></div>
+  <div class="absolute inset-0 z-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23333\' fill-opacity=\'.05\'%3E%3Cpath d=\'M36 34.215L51.895 44.5l8.11 4.5V28.525l-2.062-1.115L36 34.215zm-6.25-11.23L44.895 2.5l8.11 4.5v15.975L44.895 28.5L29.75 22.985zM30 3.75l15.895 9.25L54 18.275V2.225l-8.11-4.5L30 3.75z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
 
-    <div class="flex flex-col gap-2">
-      <h3 class="font-semibold text-lg">Categories</h3>
-      <a href="#" class="hover:text-blue-500 transition">New Collection</a>
-      <a href="#" class="hover:text-blue-500 transition">All Products</a>
-      <a href="#" class="hover:text-blue-500 transition">Discounted Products</a>
-    </div>
+  <aside class="w-full lg:w-1/4 flex flex-col gap-6 p-8 bg-white rounded-3xl shadow-xl sticky top-8 lg:max-h-[85vh] overflow-y-auto z-10">
+    <div class="flex flex-col gap-4">
+      <h3 class="font-bold text-2xl text-gray-800 border-b-2 border-blue-500 pb-2">Shop</h3>
+      
+      <div class="flex flex-col gap-2">
+        <label for="sortby" class="font-semibold text-gray-700">Sort by</label>
+        <form action="/shop" class="w-full">
+          <select id="sortby" name="sortby" class="bg-gray-100 border border-gray-300 text-gray-800 p-3 rounded-xl w-full focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-300">
+            <option value="popular">Popular</option>
+            <option value="newest">Newest</option>
+          </select>
+        </form>
+      </div>
 
-    <div class="flex flex-col gap-2 mt-8">
-      <h3 class="font-semibold text-lg">Filters</h3>
-      <a href="#" class="hover:text-blue-500 transition">Availability</a>
-      <a href="#" class="hover:text-blue-500 transition">Discount</a>
+      <div class="flex flex-col gap-2 mt-4">
+        <h4 class="font-semibold text-gray-700">Categories</h4>
+        <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">New Collection</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">All Products</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">Discounted</a>
+      </div>
+
+      <div class="flex flex-col gap-2 mt-4">
+        <h4 class="font-semibold text-gray-700">Filters</h4>
+        <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">Availability</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">By Discount</a>
+      </div>
     </div>
   </aside>
 
-  <!-- Product Grid (full width, outside the sidebar box) -->
-  <main class="w-3/4 flex flex-col gap-6 overflow-y-auto">
-    <div class="grid grid-cols-3 gap-6">
+  <main class="w-full lg:w-3/4 flex flex-col gap-8 z-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
       <% products.forEach(product => { %>
-      <div
-        class="bg-white rounded-lg shadow hover:shadow-2xl transition transform hover:-translate-y-1 duration-300 flex flex-col"
-      >
-        <!-- Product Image -->
-        <div
-          class="w-full h-52 flex items-center justify-center rounded-t-lg overflow-hidden"
-          style="background-color: <%= product.bgcolor %>"
-        >
-          <img
-            class="h-[12rem] object-contain transition-transform hover:scale-105 duration-300"
-            src="/images/<%= product.image %>"
-            alt="<%= product.name %>"
-          />
+      <div class="relative group bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col transform transition-all duration-500 hover:scale-[1.03]">
+        
+        <div class="w-full h-0 pb-[100%] relative flex items-center justify-center p-4" style="background-color: <%= product.bgcolor %>;">
+          <img class="absolute inset-0 w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105" src="/images/<%= product.image %>" alt="<%= product.name %>" />
+          <% if(product.discount && product.discount > 0){ %>
+          <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">-<%= product.discount %>₹ OFF</span>
+          <% } %>
         </div>
 
-        <!-- Product Info -->
-        <div
-          class="flex justify-between items-center px-4 py-4"
-          style="
-            background-color: <%= product.panelcolor %>;
-            color: <%= product.textcolor %>;
-          "
-        >
-          <div class="flex flex-col gap-1">
-            <h3 class="font-semibold"><%= product.name %></h3>
-            <h4 class="font-medium">₹ <%= product.price %></h4>
-            <% if(product.discount && product.discount > 0){ %>
-            <span class="text-green-600 font-semibold"
-              >-₹<%= product.discount %> off</span
-            >
-            <% } %>
+        <div class="relative flex flex-col p-6" style="background-color: <%= product.panelcolor %>; color: <%= product.textcolor %>;">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-xl"><%= product.name %></h3>
+            <span class="font-extrabold text-xl">₹ <%= product.price %></span>
           </div>
-          <a
-            href="/addtocart/<%= product._id %>"
-            class="w-8 h-8 flex items-center justify-center rounded-full bg-white hover:bg-gray-300 transition"
-          >
-            <i class="ri-add-line text-xl text-blue-600"></i>
-            <!-- Changed color here -->
+          
+          <a href="/addtocart/<%= product._id %>" class="absolute bottom-[-15px] right-6 p-4 rounded-full bg-blue-600 text-white shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:bottom-4 group-hover:p-3 hover:bg-blue-700">
+            <i class="ri-shopping-cart-line text-2xl"></i>
           </a>
         </div>
       </div>
@@ -90,3 +69,24 @@
 </div>
 
 <%- include('./partials/footer') %>
+
+<style>
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.5s ease-out forwards;
+  }
+
+  .pb-\[100\%\] {
+    padding-bottom: 100%;
+  }
+</style>
