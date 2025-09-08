@@ -1,5 +1,5 @@
 const express = require('express');
-const isLoggedIn = require('../middlewares/isLoggedIn');
+const isLoggedIn = require('../middlewares/isLoggedin');
 const { logout } = require("../controllers/authController")
 const router = express.Router();
 const userModel = require("../models/user-model");
