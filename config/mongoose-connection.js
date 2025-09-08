@@ -5,7 +5,7 @@ require("dotenv").config(); // Load environment variables
 const mongoURI = process.env.MONGODB_URI;
 
 mongoose
-    .connect(`${mongoURI}/scatch`, {
+    .connect(`${mongoURI}/test`, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
